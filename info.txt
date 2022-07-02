@@ -1,0 +1,42 @@
+It is based on request and response model
+
+Deployment - when we put our application inside a server
+
+web application architecture is two tier(layer)- client and server
+application which is making the request
+
+For servlet/jsp only web container is enough
+ejb ~ enterprise java beans needs ejb container
+
+application server is heavy weight
+web container is light weight
+------------------
+Static vs. dynamic webpage / website vs. webApplication:
+  >> javascript used to create Dynamic webpage, DW can be a page created on request(created at runtime)
+
+Why Servlet: to create dynamic html webpages
+
+HttpRequest types: Put,Post, Delete, Get etc.  Get/Post method need to have implementation on server.
+
+----------------------------
+Get vs. Post:
+ GET: to request data from the server(request params are appended to URL), get() is faster.
+     >> can send limited amount of data depending on the browser. [eg. 2KB for older version IE]
+     >> Less secure , data privacy is not there as req params are appended to URL i.e are visible to all
+ Post: to send data to the server.(request params are part of request body), post() is slower
+      >> unlimited data can be sent through body
+      >> more secure as data is encovered in requset body.
+--------------------------
+Framework: set of classes n interfaces that work to solve a specific problem.
+Library: set of classes n interfaces, we will use the library (while framework utilizes our code)
+--------------------------
+- container means it is a run time environment, tomcat manages the life cycle of a servlet
+- servlet has 3 lifecycle method ~ 1. init 2. service 3. destroy
+- init will be called for the very first request for that particular servlet
+- service will be called for each request
+- destroy will be called when the web application is undeployed
+--------------------------
+---default form method is: Get, however change can be made
+<form="servlet url" method="post">
+----HttpServlet(abstract) extends GenericServlet(abstract)(which extends Servlet interface)
+
