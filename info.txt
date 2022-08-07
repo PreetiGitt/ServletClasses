@@ -25,7 +25,7 @@ Get vs. Post:
      >> Less secure , data privacy is not there as req params are appended to URL i.e are visible to all
  Post: to send data to the server.(request params are part of request body), post() is slower
       >> unlimited data can be sent through body
-      >> more secure as data is encovered in requset body.
+      >> more secure as data is encovered in request body.
 --------------------------
 Framework: set of classes n interfaces that work to solve a specific problem.
 Library: set of classes n interfaces, we will use the library (while framework utilizes our code)
@@ -37,6 +37,86 @@ Library: set of classes n interfaces, we will use the library (while framework u
 - destroy will be called when the web application is undeployed
 --------------------------
 ---default form method is: Get, however change can be made
-<form="servlet url" method="post">
+<form action="servlet url" method="post">
 ----HttpServlet(abstract) extends GenericServlet(abstract)(which extends Servlet interface)
+---------------
+all the jars are there in WEB-INF-->> lib folder
+---------------
+- we have two init methods, loadOnSatrtup is parametrized and loadOnSatrtup is non-parametrized
+- to instantiate the servlet before request is made, we can do  loadOnStartup=1 in annotation, if value is 1, first servlet will be called
+- lower the value of loadOnStartup, higher the rank, it will execute first
+- use case ~ if the servlet is heavy, when the request is made it will be already loaded
+- without touching any code we can add mappings and config in web.xml, for example - load-on-startup, url-pattern
+- non parametrized got called when the parametrized is not present
+- tomcat is open source
+-----------
+ServletConfig is instantiated
+----------
+Sequence is:
+<init param>  then
+<load on startup>
+------------
+LOAD ON STARTUP annotation:
+loads the servlet , can be verified from init()
+the lower the number , the higher the priority
+------------
+SCOPE:
+request(shortest scope),
+1.)Application(longest, a/v as long as application is deployed or server is running),
+.. working with application scope is not recommended (stays for longer, takes more memory)
+...application scope is a/v to all the jsp and servlet(web components)
+... application scope is not dependent on request
+....ServletContext is an interface through which we get reference of Application Scope
 
+2.) request(shortest scope)
+.. request is processed ; as soon as response is sent, request scope is no more a/v
+
+3.) Session(longer than the request)
+..based on the requirement , we can store data in scope
+...Collaborating web components share information by means of objects that are maintained as attributes of four scope objects.
+
+
+------------------
+COOKIE: ( Class in http pkg. ; exists in KEY-VALUE pair)
+-> The scope objects are stored on server but cookies are stored on client side,
+  --> reduces the load on server.
+-> Server can specify the duration for which the cookies can be valid.
+ But the disadv is : cookies can be disabled.
+
+-> client makes a request to server---- a cookie is stored on client side
+ --> When the same client makes the 2nd request to the server
+     ( even for a different service), the previously stored cookie is sent back.
+-> Cookie set in one browser(chrome) , can not be read in another browser(firefox).
+-> Best Practice: not to store sensitive info in cookie
+->Inspect element=> application ->storage -> cookie
+-> there are two kinds of cookies
+    1. Persistent
+    2. Non-Persistent(close the browser and we loose the cookie : they exist in cache of browser)
+---------------------
+AWS:
+mvn clean install - runnable only where pom.xml is present
+create a record-> keep alias toggle button ON -> info IP -> beanstalk URL
+----------------------
+ SESSION:(STATE MANAGEMENT)
+ 1.HTTP is stateless protocol: req made, response sent-- then server doesn't know the client.
+ 2. Cookie can be one of the way of state mgmt. but they are controlled by the client.
+ 3. Each request has its own unique session.
+ 4. 'request.getSession()' will give us a NEW SESSION iff there is no existing session for the same client.
+    a. or it will return the existing session
+ 5. First request- new session, on refresh -> 'OLD SESSION'; different browser-> 'new session'
+ 6. For each New Session , a session id  is sent back to client in the form of cookies
+    a. aka SESSION COOKIE
+ 7. ON disabling all the cookies, each time we get a NEW SESSION : as session Id is not there
+ 8. URL REWRITING is  way to resolve pt 7.
+
+ 9. [HttpSession httpSession= request.getSession(false)]->> doesn't allow to make a new session.
+ 10. request.getSession(true) and request.getSession() are same.
+ 11.
+ ----------------------
+ ASSG: removing/ replacing the object from scope
+login/logout  then timeout
+ --------------
+ SESSION TIMEOUT: set in web.xml
+       after timeout time -> a new session is generated
+  1.  httpSession.setMaxInactiveInterval(50) get priority over time set in xml.
+  2.  httpSession.invalidate(): often should be called for an existing session.
