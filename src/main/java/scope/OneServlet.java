@@ -20,8 +20,9 @@ public class OneServlet extends HttpServlet {
         out.println("<h3 >Working with OneServlet</h3>");
         String fname= request.getParameter("first_name");
         String lname= request.getParameter("last_name");
+        //Setting where to go--SecondServ
         RequestDispatcher rd= request.getRequestDispatcher("SecondServ");
-        //request.setAttribute("test", "I am one servlet");
+
         request.setAttribute("FirstName",fname);
         request.setAttribute("2ndName",lname);
         // forward method

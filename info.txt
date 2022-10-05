@@ -107,7 +107,10 @@ create a record-> keep alias toggle button ON -> info IP -> beanstalk URL
  6. For each New Session , a session id  is sent back to client in the form of cookies
     a. aka SESSION COOKIE
  7. ON disabling all the cookies, each time we get a NEW SESSION : as session Id is not there
- 8. URL REWRITING is  way to resolve pt 7.
+ 8. URL REWRITING is  way to resolve pt 7.->> encodeURL
+     a. response.encodeURL(""servletlink), appends the sessionId to redirected servlet ,so
+        it carries the same session despite disabled cookies
+
 
  9. [HttpSession httpSession= request.getSession(false)]->> doesn't allow to make a new session.
  10. request.getSession(true) and request.getSession() are same.
@@ -120,3 +123,35 @@ login/logout  then timeout
        after timeout time -> a new session is generated
   1.  httpSession.setMaxInactiveInterval(50) get priority over time set in xml.
   2.  httpSession.invalidate(): often should be called for an existing session.
+  --------------
+ FILTER:
+     is a web component, also an interface (web component means its lifecycle is managed by the web container)
+        - to filter request/response
+        - filter brings reusability of code , by giving validation for multiple servlet.
+        UseCase: for logging, encryption, zipping of files etc.
+        1.) Filter gets invoked without any request being made.(check with init method)
+        2.) filterChain.doFilter(servletRequest,servletResponse); --> without it the control
+            does not go to the servlet.
+        3.) control goes twice to filter.
+           a. as we make the request
+           b. as the response comes from servlet.
+ ---------------
+ INTERCEPTOR: same as filter
+----------------------------------------
+LISTENER:
+Event is a recognised action,
+1.Source
+2. Listener -object that performs some action at event/ implements some interface
+3. registration of source with listener
+4.One listener may have multiple src and vice-versa.
+5. when the event occurs, the corresponding event class is instantiated and info of event is stored
+ in the object and this object is passed in as args to listener, the corresponding method of listener
+ will be called.
+
+
+
+
+
+
+
+

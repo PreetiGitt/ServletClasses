@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 
 
 @WebServlet("/setSession")
-// line 22 and 23 gives same output
+
 public class SetSession extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
