@@ -1,0 +1,56 @@
+Process: active state of program, Process Control Block, ProcessId,priority, PC(Program Counter)
+Processor: Control Unit, ALU, Memory(Register), Execution Unit
+dxdiag: cmd to check system configuration
+-------------------
+1.Thread: Threads are sometimes called lightweight processes.
+ Both processes and threads provide an execution environment,
+ but creating a new thread requires fewer resources than creating a new process
+
+2.Concurrency / MultiThreading
+3.Different threads of same process can perform the same task or different task.
+4. LifeCycle of thread: 6 states , as Enum of Thread
+  new, runnable, blocked, waiting, timed waiting, terminated
+5. Order of execution can not be predicted(except JOIN case)
+6. Unhandled Exception in one thread does not affect execution of other Thread
+7. Thread.sleep() is overloaded
+8.  Any Thread can be interrupted (irrespective of sleep)
+9. System.exit() on one application in tomcat-> may terminate others too?
+====
+10. Even if main thread is not alive, the other thread can still execute/can be alive
+=======
+11.DAEMON THREAD: assists the user thread
+   -2 types of thread- user n daemon thread
+   -once user thread is terminated, daemon thread is automatically killed
+   - if any of the user thread exists, daemon thread exists
+   - Thread should be setDaemon() only before .start()->else IllegalThreadStateException
+   - A thread created in Daemon Thread is also a daemon Thread, but can be explicitly
+     setDaemon(false).
+   -Main Thread can not be Daemon as it is started by JVM itself.(setDaemon()->start())
+===========
+use of suspend(), stop() and resume() are deprecated- deadlock may be created
+=====
+If this thread is blocked in an invocation of the wait(), wait(long),
+or wait(long, int) methods of the Object class,
+or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int) methods of this class,
+then its interrupt status will be cleared and it will receive an InterruptedException.
+==================
+INTERRUPT:
+interrupted() vs isInterrupted()[only checks the status]-
+interrupted()- The interrupted status of the thread is cleared by this method
+                CHANGES the status of interrupted thread to uninterrupted
+==========
+t1.join();
+Joined-t1
+Joining -main/ invoking thread
+JOIN: the remaining portion of thread invoking join is executed after joined thread
+TimedJoin:
+the control comes to invoking thread as soon as joined thread completes, join(time too long)
+
+==========
+java.util.concurrent pkg: after java 5
+--Main thread is the default thread.
+
+eg: Login Sever,Chat server - using a thread for each new user
+
+Priority, wait notify, daemon thread,producer consumer, thread exceptions, synchronisation, Timer Task example
+core java-Gary cornell vol-1-> eg of bank application
